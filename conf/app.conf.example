@@ -70,7 +70,7 @@ mail_expired=30
 
 
 ###############配置PDF生成工具地址###################
-wkhtmltopdf=D:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe
+wkhtmltopdf=/bin/wkhtmltopdf
 
 ###############配置CDN加速##################
 cdn=
