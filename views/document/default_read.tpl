@@ -111,11 +111,6 @@
                     </div>
                 </div>
             </div>
-            <div class="m-copyright">
-                <p>
-                    本文档使用 <a href="https://www.iminho.me" target="_blank">MinDoc</a> 发布
-                </p>
-            </div>
         </div>
         <div class="manual-right">
             <div class="manual-article">
