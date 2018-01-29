@@ -108,7 +108,6 @@ mail_expired=30
 
 
 # 使用Docker部署
-
 如果是Docker用户，可参考项目内置的Dockerfile文件编译镜像。
 
 在启动镜像时需要提供如下的环境变量：
@@ -128,6 +127,28 @@ HTTP_PORT                   程序监听的端口号
  docker run --name mindoc-web -v /data/docker/mindoc/uploads:/go/src/github.com/lifei6671/mindoc/uploads --restart=always -p 8000:8000 -e MYSQL_PORT_3306_TCP_ADDR=192.168.1.99 -e HTTP_PORT=8000  -d registry.cn-hangzhou.aliyuncs.com/apexsoft/mindoc:latest
 ```
 注意：导出pdf中文会出现乱码，需要将simsun.ttc复制到/usr/share/fonts/chinese/TrueType目录下
+### docker-compose 一键安装
+1. 生成配置文件
+    > cp env-example .env
+
+    按照自己的环境填写配置信息到.env文件中
+2. 一键完成所有环境搭建
+    > docker-compose up -d mindoc
+3. 浏览器访问
+    > http://localhost:8181/
+    
+    整个部署完成了
+4. 常用命令参考
+   - 启动
+        > docker-compose up -d mindoc
+   - 停止
+        > docker-compose stop mindoc
+   - 重启
+        > docker-compose restart mindoc        
+   - 停止删除容器，释放所有资源
+        > docker-compose down
+        
+   更多 docker-compose 的使用相关的内容 请查看官网文档或百度
 
 # 项目截图
 
