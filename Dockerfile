@@ -18,7 +18,7 @@ WORKDIR /go/src/github.com/lifei6671/mindoc
 
 RUN chmod +x start.sh
 
-#RUN  go get -d ./... && \  # 这行 docker build 不过去,所以注释掉了
-RUN go get github.com/mitchellh/gox && \
+RUN  go get -d ./... && \ 
+    go get github.com/mitchellh/gox && \
     gox -os "windows linux darwin" -arch amd64
 CMD ["./start.sh"]
