@@ -124,7 +124,7 @@ HTTP_PORT                   程序监听的端口号
 举个栗子
 
 ```bash
- docker run --name mindoc-web -v /data/docker/mindoc/uploads:/go/src/github.com/lifei6671/mindoc/uploads --restart=always -p 8000:8000 -e MYSQL_PORT_3306_TCP_ADDR=192.168.1.99 -e HTTP_PORT=8000  -d registry.cn-hangzhou.aliyuncs.com/apexsoft/mindoc:latest
+ docker run --name mindoc-web -v /data/docker/mindoc/uploads:/go/src/github.com/lifei6671/mindoc/uploads --restart=always -p 8083:8000 -e MYSQL_PORT_3306_TCP_ADDR=192.168.1.99 -e HTTP_PORT=8000  -d registry.cn-hangzhou.aliyuncs.com/apexsoft/mindoc:latest
 ```
 注意：导出pdf中文会出现乱码，需要将simsun.ttc复制到/usr/share/fonts/chinese/TrueType目录下
 ### docker-compose 一键安装
