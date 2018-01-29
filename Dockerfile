@@ -1,4 +1,4 @@
-FROM golang:1.8.3-alpine3.6
+FROM golang:1.9.3-alpine3.6
 
 RUN apk add --update --no-cache \
 libgcc libstdc++ libx11 glib libxrender libxext libintl \
