@@ -13,8 +13,7 @@ RUN apk update && \
     wget \
     xdg-utils \
     xz && \
-    wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()" && \
-    rm -rf /tmp/calibre-installer-cache
+    wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()" 
 
 ADD . /go/src/github.com/lifei6671/mindoc
 
