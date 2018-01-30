@@ -12,7 +12,8 @@ RUN apk add --update curl && \
   apk del curl && \
   rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*
 
-RUN apk add --update bash git make gcc g++
+RUN apk add --update bash git make gcc g++ libxrender libxcomposite
+
 # install calibre
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/opt/calibre/lib
 ENV PATH $PATH:/opt/calibre/bin
