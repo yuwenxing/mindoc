@@ -1,10 +1,9 @@
-FROM golang:1.9.3-alpine3.6
+FROM golang:1.9.3-alpine3.7
 
-RUN apk add --update bash git make gcc g++
+RUN apk add --update bash git make gcc g++ 
 # install calibre
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/opt/calibre/lib
 ENV PATH $PATH:/opt/calibre/bin
-ENV CALIBRE_INSTALLER_SOURCE_CODE_URL https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py
 RUN apk update && \
     apk add --no-cache --upgrade \
     ca-certificates \
@@ -14,7 +13,7 @@ RUN apk update && \
     wget \
     xdg-utils \
     xz && \
-    wget -O- ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)" && \
+    wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()" && \
     rm -rf /tmp/calibre-installer-cache
 
 ADD . /go/src/github.com/lifei6671/mindoc
