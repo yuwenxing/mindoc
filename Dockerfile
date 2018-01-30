@@ -1,6 +1,6 @@
 FROM golang:1.9.3-alpine3.6
 
-
+ENV GLIBC_VERSION 2.26-r0
 # Download and install glibc
 RUN apk add --update curl && \
   curl -Lo /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
