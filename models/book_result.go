@@ -199,7 +199,7 @@ func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 	defer func(p string) {
 		os.RemoveAll(p)
 	}(tempOutputPath)
-	
+
 	if utils.FileExists(pdfpath) && utils.FileExists(epubpath) && utils.FileExists(mobipath) && utils.FileExists(docxpath) {
 		convertBookResult.EpubPath = epubpath
 		convertBookResult.MobiPath = mobipath
@@ -262,6 +262,9 @@ func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 		MarginBottom: "72",
 		Toc:          tocList,
 		More:         []string{},
+	}
+	if m.Publisher != "" {
+		ebookConfig.Footer = "<p style='color:#8E8E8E;font-size:12px;'>本文档由 <span style='text-decoration:none;color:#1abc9c;font-weight:bold;'>"+ m.Publisher +"</span> 生成<span style='float:right'>- _PAGENUM_ -</span></p>"
 	}
 
 	if tempOutputPath, err = filepath.Abs(tempOutputPath); err != nil {

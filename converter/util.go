@@ -45,3 +45,4 @@ func parseConfig(configFile string) (cfg Config, err error) {
 	}
 	return
 }
+

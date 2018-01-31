@@ -20,6 +20,8 @@ import (
 	"github.com/lifei6671/mindoc/models"
 	"github.com/lifei6671/mindoc/utils"
 	"github.com/lifei6671/mindoc/utils/pagination"
+	"net/http"
+	"github.com/lifei6671/mindoc/converter"
 )
 
 type BookController struct {
@@ -123,18 +125,19 @@ func (c *BookController) SaveBook() {
 		c.JsonResult(6002, err.Error())
 	}
 
-	book_name := strings.TrimSpace(c.GetString("book_name"))
+	bookName := strings.TrimSpace(c.GetString("book_name"))
 	description := strings.TrimSpace(c.GetString("description", ""))
-	comment_status := c.GetString("comment_status")
+	commentStatus := c.GetString("comment_status")
 	tag := strings.TrimSpace(c.GetString("label"))
 	editor := strings.TrimSpace(c.GetString("editor"))
-	auto_release := strings.TrimSpace(c.GetString("auto_release")) == "on"
+	autoRelease := strings.TrimSpace(c.GetString("auto_release")) == "on"
+	publisher := strings.TrimSpace(c.GetString("publisher"))
 
 	if strings.Count(description, "") > 500 {
 		c.JsonResult(6004, "项目描述不能大于500字")
 	}
-	if comment_status != "open" && comment_status != "closed" && comment_status != "group_only" && comment_status != "registered_only" {
-		comment_status = "closed"
+	if commentStatus != "open" && commentStatus != "closed" && commentStatus != "group_only" && commentStatus != "registered_only" {
+		commentStatus = "closed"
 	}
 	if tag != "" {
 		tags := strings.Split(tag, ",")
@@ -146,12 +149,13 @@ func (c *BookController) SaveBook() {
 		editor = "markdown"
 	}
 
-	book.BookName = book_name
+	book.BookName = bookName
 	book.Description = description
-	book.CommentStatus = comment_status
+	book.CommentStatus = commentStatus
+	book.Publisher = publisher
 	book.Label = tag
 	book.Editor = editor
-	if auto_release {
+	if autoRelease {
 		book.AutoRelease = 1
 	} else {
 		book.AutoRelease = 0
@@ -160,9 +164,9 @@ func (c *BookController) SaveBook() {
 	if err := book.Update(); err != nil {
 		c.JsonResult(6006, "保存失败")
 	}
-	bookResult.BookName = book_name
+	bookResult.BookName = bookName
 	bookResult.Description = description
-	bookResult.CommentStatus = comment_status
+	bookResult.CommentStatus = commentStatus
 	bookResult.Label = tag
 	c.JsonResult(0, "ok", bookResult)
 }
@@ -445,6 +449,30 @@ func (c *BookController) Create() {
 		c.JsonResult(0, "ok", bookResult)
 	}
 	c.JsonResult(6001, "error")
+}
+
+func (c *BookController) Import() {
+
+	file, moreFile, err := c.GetFile("import-file")
+	if err == http.ErrMissingFile {
+		c.JsonResult(6003, "没有发现需要上传的文件")
+	}
+
+	defer file.Close()
+
+	beego.Info(moreFile.Filename)
+
+	tempPath := filepath.Join(os.TempDir(),c.CruSession.SessionID())
+
+	os.MkdirAll(tempPath,0766)
+
+	tempPath = filepath.Join(tempPath,moreFile.Filename)
+
+	err = c.SaveToFile("import-file", tempPath)
+
+	converter.Resolve(tempPath)
+
+
 }
 
 // CreateToken 创建访问来令牌.
